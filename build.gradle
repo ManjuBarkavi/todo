@@ -1,0 +1,12 @@
+defaultTasks 'helloWorld1'
+task helloWorld {
+    doLast {
+        println 'Welcome to JCG Gradle Tutorial'+getProject().getBuildDir()
+    }
+}
+
+task helloWorld1 (dependsOn:helloWorld){
+    doLast {
+        println 'Welcome to JCG Gradle Tutorial'
+    }
+}
