@@ -1,0 +1,200 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4em;
+  background: #eeeeee;
+  color: #333333;
+}
+
+#views {
+  width: 310px;
+  margin: 0 auto 0px auto;
+  background: white;
+  -moz-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+
+#tasks {
+  position: relative;
+  padding: 20px 20px 47px 20px;
+  box-shadow: 0 0 15px 0 rgba(43, 51, 61, 0.2);
+}
+
+#tasks h1 {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  padding: 0 0 10px 0;
+}
+
+#tasks input[type="text"] {
+  	background-color: #fff;
+	border: 1px solid #d8dce1;
+	box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
+	padding: 0 0 0 15px;
+	outline: 0;
+	border-radius: 3px;
+	width: 251px;
+	height: 40px;
+ 	font-size: 14px;
+}
+
+
+#tasks input::-webkit-input-placeholder {
+  /*font-style: italic;*/
+}
+
+#tasks .items {
+  margin: 10px 0 0;
+  list-style: none;
+  height: 238px;
+  overflow: auto;
+}
+
+#tasks .item {
+  padding: 15px 20px 15px 0;
+  position: relative;
+  font-size: 15px;
+  border-bottom: 1px solid #cccccc;
+}
+
+#tasks .item.done span {
+  color: #777777;
+  text-decoration: line-through;
+}
+#tasks .item .view > input[type=checkbox] {
+  float:left;
+}
+
+code.checkbox {
+   display: inline-block;
+   background-color: #fff;
+   border: 1px solid rgba(147,158,174,.6);
+   border-radius: 1px;
+   width: 15px;
+   height: 15px;
+   box-shadow: inset 0 1px 2px 0 rgba(189,193,197,.1);
+   padding: 0;
+   vertical-align: bottom;
+   margin: 0 5px 0 0;
+}
+
+code.checkbox.active {
+   background-color: #1DABF2;
+   background-image: url(/images/check.png);
+   background-size: 11px 11px;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+
+
+
+#tasks .item .view > span {
+  vertical-align: middle;
+  font-size: 16px;
+}
+
+/* #tasks .item .destroy {
+  position: absolute;
+  right: 10px;
+  top: 16px;
+  display: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url(../images/destroy.png) no-repeat center center;
+  background-size: 13px;
+  bottom: 0;
+  margin: auto;
+  top: 6px;
+} */
+
+.icon-close{
+	position: absolute;
+	right: 10px;
+	top: 23px;
+	cursor: pointer;
+	display: none;
+	vertical-align: top;
+	width: 10px;
+	height: 10px;
+	background-image: url(/images/close.png);
+	background-size: 8px 8px;
+	background-position: center;
+	background-repeat: no-repeat;	
+}
+
+
+#tasks .item:hover .icon-close {
+  display: block;
+}
+
+#tasks .item .edit { display: none; }
+#tasks .item.editing .edit { display: block; }
+#tasks .item.editing .view { display: none; }
+
+#tasks footer {
+   display: block;
+  color: #555555;
+  background: #F9FAFC;
+  border-top: 1px solid #E2E5EA;
+  padding: 5px 20px;
+  line-height: 36px;
+  border-radius: 0 0 5px 5px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+#tasks footer .count{
+  padding: 0 0 0 5px;
+}
+#tasks .clear {
+  display: block;
+  float: right;
+  line-height: 28px;
+  text-decoration: none;
+  background: #83C447;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+  padding: 0 10px 1px;
+
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#tasks .clear:hover {
+  background: rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+  -o-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+}
+
+#tasks .clear:active {
+  position: relative;
+  top: 1px;
+}
+
+#tasks .count span {
+  font-weight: bold;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    code.checkbox.active {
+	    background-image: url(../images/check_2x.png);
+	}
+	.icon-close {
+	    background-image: url(../images/close_2x.png);
+	}	
+}
