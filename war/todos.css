@@ -1,0 +1,345 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	line-height: 1.4em;
+	background: #eeeeee;
+	color: #555555;
+	width: 310px;
+	margin: 0 auto;
+	-webkit-font-smoothing: antialiased;
+}
+
+#todoapp {
+	background: #fff;
+	width: 290px;
+	padding: 10px;
+	height: 400px;
+	margin-bottom: 40px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-ms-border-radius: 0 0 5px 5px;
+	-o-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+}
+
+#todoapp h1 {
+	font-size: 36px;
+	font-weight: bold;
+	text-align: center;
+	padding: 0 0 10px 0;
+}
+
+.scrumMode {
+	width: 229px !important;
+    margin-left: 50px !important;
+    font-size: 20px !important;
+}
+
+#todoapp input[type="text"] {
+	color: #555555;
+	width: 278px;
+	font-size: 24px;
+	font-family: inherit;
+	line-height: 1.4em;
+	outline: none;
+	/* margin-left: -10px; */
+	padding: 6px;
+	height: 15px;
+	border: none;
+	border-bottom: 1px solid #3b99fc;
+	text-transform: capitalize;
+	/* -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset; */
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	/* box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset; */
+}
+
+#todoapp input::-webkit-input-placeholder {
+	font-style: italic;
+}
+
+#main {
+	display: none;
+}
+
+#todo-list {
+	margin: 10px 0px 0px 0px;
+	padding: 0;
+	list-style: none;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 270px;
+	overflow-y: auto;
+}
+
+#todo-list li {
+	padding: 18px 20px 10px 0;
+	position: relative;
+	font-size: 20px;
+	border-bottom: 1px solid #cccccc;
+}
+
+#todo-list li:last-child {
+	border-bottom: none;
+}
+
+#todo-list li.done label {
+	color: #777777;
+	text-decoration: line-through;
+}
+
+#todo-list .destroy {
+	position: absolute;
+	right: 5px;
+	top: 20px;
+	display: none;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	/* background: url(destroy.png) no-repeat; */
+	border-radius: 50%;
+	line-height: 1;
+	font-size: 14px;
+	opacity: 0.7;
+}
+
+#todo-list li:hover .destroy {
+  	display: block;
+}
+
+#todo-list .destroy:hover {
+  	background-position: 0 -20px;
+}
+
+#todo-list li.editing {
+	border-bottom: none;
+	margin-top: -1px;
+	padding: 0;
+}
+
+#todo-list li.editing:last-child {
+	margin-bottom: -1px;
+}
+
+#todo-list li.editing .edit {
+	display: block;
+	width: 255px;
+	padding: 13px 15px 7px 23px;
+	margin: 0;
+}
+
+#todo-list li.editing .view {
+	display: none;
+}
+
+#todo-list li .view label {
+	word-break: break-word;
+	text-transform: capitalize;
+}
+
+#todo-list li .edit {
+	display: none;
+}
+
+#todoapp footer {
+	display: none;
+	margin: 0px -10px -10px -10px;
+	overflow: hidden;
+	color: #555555;
+	background: #f4fce8;
+	border-top: 1px solid #ededed;
+	padding: 0 20px;
+	line-height: 37px;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-ms-border-radius: 0 0 5px 5px;
+	-o-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+}
+
+#clear-completed {
+	float: right;
+	line-height: 20px;
+	text-decoration: none;
+	background: rgba(0, 0, 0, 0.1);
+	color: #555555;
+	font-size: 11px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding: 0 10px 1px;
+	cursor: pointer;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	-ms-border-radius: 12px;
+	-o-border-radius: 12px;
+	border-radius: 12px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+}
+
+#clear-completed:hover {
+	background: rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+	-moz-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+	-ms-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+	-o-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+	box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+}
+
+#clear-completed:active {
+	position: relative;
+	top: 1px;
+}
+
+#todo-count span {
+	font-weight: bold;
+}
+
+#instructions {
+	margin: 10px auto;
+	color: #777777;
+	text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+	text-align: center;
+}
+
+#instructions a {
+	color: #336699;
+}
+
+#credits {
+	margin: 30px auto;
+	color: #999;
+	text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+	text-align: center;
+}
+
+#credits a {
+	color: #888;
+}
+
+#todo-list-container {
+	width: 310px;
+	margin-left: -10px;
+}
+
+.destroy i {
+	padding-left: 5px;
+	padding-top: 2px;
+}
+
+#voicebox {
+	text-align: center;
+    background-color: #FDD835;
+    font-weight: bold;
+    top: 0px;
+    margin-left: -2px;
+    position: absolute;
+    width: 292px;
+    border-radius: 0px 0px 5px 5px;
+    height: 30px;
+    line-height: 2;
+    display:none;
+}
+#randomMsg {
+	margin-top: 50%;
+	text-align: center;
+}
+#menucontainer {
+	display:none;
+}
+#sideMenu {
+	display: block;
+	position: absolute;
+	height: 420px;
+	width: 160px;
+	top: 0px;
+	margin-left: -10px;
+	border-radius: 0px 0px 0px 5px;
+	background-color: #555555;
+	color: white;
+	font-size: 14px;
+}
+
+#menu-close {
+	float: right;
+    margin-right: 2px;
+    margin-top: 5px;
+    font-size: 22px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#menucontainer {
+	position: absolute;
+	display: none;
+	width: 310px;
+	height: 420px;
+	top: 0px;
+	margin-left: 0px;
+}
+
+#sideMenu-list {
+	list-style: none;
+	margin-left: -30px;
+	margin-top: 62px;
+	padding-left: 45px;
+	padding-right: 20px;
+	/* padding: 10px 20px 10px 45px; */
+}
+#sideMenu-list li {
+	border-bottom: solid 1px #ccc;
+	font-size: 14px;
+	padding: 10px 0px;
+	cursor: pointer;
+}
+
+#sideMenu-list li:hover {
+	box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+}
+#menu-footer {
+	margin-top: 235px;
+	padding-left: 10px;
+	padding-top: 10px;
+	border-top: solid 1px #ccc;
+}
+
+#mode-switch {
+	float: right;
+}
+
+#popupcontainer {
+	width: 310px;
+	height: 420px;
+	position: absolute;
+	z-index: 2;
+	margin-left: -10px;
+	margin-top: -10px;
+	background-color: white;
+	opacity: 0.7;
+}
+
+#selectScore {
+	    position: absolute;
+	    margin-top: -21px;
+	    margin-left: 4px;
+	    font-size: 22px;
+	    display: none;
+}
+
+	
