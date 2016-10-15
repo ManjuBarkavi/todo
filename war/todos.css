@@ -9,17 +9,17 @@ body {
 	line-height: 1.4em;
 	background: #eeeeee;
 	color: #555555;
-	width: 310px;
+	width: 300px;
+	height: auto;
 	margin: 0 auto;
 	-webkit-font-smoothing: antialiased;
 }
 
 #todoapp {
 	background: #fff;
-	width: 290px;
+	width: 280px;
 	padding: 10px;
-	height: 400px;
-	margin-bottom: 40px;
+	height: 410px;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
 	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
 	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
@@ -29,7 +29,7 @@ body {
 	-moz-border-radius: 0 0 5px 5px;
 	-ms-border-radius: 0 0 5px 5px;
 	-o-border-radius: 0 0 5px 5px;
-	border-radius: 0 0 5px 5px;
+	/* border-radius: 0 0 5px 5px; */
 }
 
 #todoapp h1 {
@@ -40,21 +40,21 @@ body {
 }
 
 .scrumMode {
-	width: 229px !important;
-    margin-left: 50px !important;
-    font-size: 20px !important;
+	width: 217px !important;
+	margin-left: 50px !important;
+	font-size: 17px !important;
 }
 
 #todoapp input[type="text"] {
 	color: #555555;
-	width: 278px;
-	font-size: 24px;
+	width: 267px;
+	font-size: 21px;
 	font-family: inherit;
 	line-height: 1.4em;
 	outline: none;
 	/* margin-left: -10px; */
 	padding: 6px;
-	height: 15px;
+	height: 20px;
 	border: none;
 	border-bottom: 1px solid #3b99fc;
 	text-transform: capitalize;
@@ -79,7 +79,7 @@ body {
 	list-style: none;
 	padding-left: 10px;
 	padding-right: 10px;
-	height: 270px;
+	height: 275px;
 	overflow-y: auto;
 }
 
@@ -161,11 +161,11 @@ body {
 	border-top: 1px solid #ededed;
 	padding: 0 20px;
 	line-height: 37px;
-	-webkit-border-radius: 0 0 5px 5px;
+	/* -webkit-border-radius: 0 0 5px 5px; */
 	-moz-border-radius: 0 0 5px 5px;
 	-ms-border-radius: 0 0 5px 5px;
 	-o-border-radius: 0 0 5px 5px;
-	border-radius: 0 0 5px 5px;
+	/* border-radius: 0 0 5px 5px; */
 }
 
 #clear-completed {
@@ -232,7 +232,7 @@ body {
 }
 
 #todo-list-container {
-	width: 310px;
+	width: 300px;
 	margin-left: -10px;
 }
 
@@ -264,14 +264,13 @@ body {
 #sideMenu {
 	display: block;
 	position: absolute;
-	height: 420px;
+	height: 430px;
 	width: 160px;
 	top: 0px;
-	margin-left: -10px;
-	border-radius: 0px 0px 0px 5px;
 	background-color: #555555;
 	color: white;
 	font-size: 14px;
+	z-index: 1;
 }
 
 #menu-close {
@@ -288,10 +287,10 @@ body {
 #menucontainer {
 	position: absolute;
 	display: none;
-	width: 310px;
-	height: 420px;
+	width: 290px;
+	height: 320px;
 	top: 0px;
-	margin-left: 0px;
+	margin-left: -10px;
 }
 
 #sideMenu-list {
@@ -324,20 +323,33 @@ body {
 }
 
 #popupcontainer {
-	width: 310px;
-	height: 420px;
+	width: 300px;
+	height: 430px;
 	position: absolute;
 	z-index: 2;
 	margin-left: -10px;
 	margin-top: -10px;
 	background-color: white;
-	opacity: 0.7;
+	/* opacity: 0.7; */
+	display: block;
+}
+
+#popup {
+	width: 260px;
+	height: 390px;
+	margin: 20px;
+}
+
+#popupcontainer-close {
+	float: right;
+    margin-right: 6px;
+    margin-top: 5px;
+    font-size: 22px;
 }
 
 #selectScore {
 	    position: absolute;
-	    margin-top: -21px;
-	    margin-left: 4px;
+	    margin-top: 12px;
 	    font-size: 22px;
 	    display: none;
 }

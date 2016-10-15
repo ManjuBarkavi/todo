@@ -196,11 +196,11 @@ $(function(){
 		  				{
 			  				var template = _.template(this.template, {});
 			  				this.$el.html(template);
-			  				this.$el.fadeIn();
+			  				this.$el.show();
 		  				},
 	closeMenuBar	:	function(e)
 		  				{
-		  					this.$el.fadeOut();
+		  					this.$el.hide();
 		  				}
 		  				
 		  
@@ -208,6 +208,27 @@ $(function(){
   });
   
   var MenuView = new Menu();
+  
+  
+  var chart = Backbone.View.extend({
+	  
+	  
+	  
+		generateChart : function(){	 
+							zingchart.render({
+								    id: 'burnDownChart',
+								    data: {
+								      type: 'line',
+								      series: [{
+								        values: [54,23,34,23,43],
+								      }, {
+								        values: [10,15,16,20,40]
+								      }]
+								    }
+								  });
+						}
+			  
+  });			  
   
   
   // The Application
@@ -274,6 +295,15 @@ $(function(){
         this.main.show();
         this.footer.show();
         this.footer.html(this.statsTemplate({done: done, remaining: remaining}));
+        
+        /*if(remaining > 0)
+        {	
+	        awApp.postMessage( 'showCount', { 
+			    'count': remaining,
+			    'id' : awApp.loggedinUser.id
+			});
+        }*/
+        
         this.hideRandomMessage();
       } else {
         this.main.hide();

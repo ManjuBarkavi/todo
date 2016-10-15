@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="/todos.css">
 </head>
 <body>
-	<div id="userData"></div>
+
 	<!-- <div id="appcontainer">
 	    <div id="tasksapp">
     		<div style="width: 310px;margin-left: -20px;background-color: #f9fafc;margin-top: -20px;color: #555555;line-height: 40px;">
@@ -80,13 +80,10 @@
 	
   <div id="todoapp">
 	<div id="voicebox">Hello!</div>
-	<!-- <div id="popupcontainer">
+	<div id="popupcontainer">
 		<span style="float:right;">&times;</span>
-		<div id="popup">
-		<h3>asfd<h3>
-		<input id="new-todo" type="text" placeholder="What needs to be done?" autofocus>
-		</div>
-	</div> -->
+		<div id="popup"></div>
+	</div>
     <header>
       <div style="padding-bottom: 20px;">
       	<i id="menu" class="fa fa-bars" style="font-size: 22px;cursor: pointer;"></i>
@@ -94,14 +91,14 @@
       	<span id="mode-switch">Activate</span>
       </div>
       <div id="menucontainer"></div>
-      <input id="new-todo" type="text" placeholder="What needs to be done?">
-      <select id="selectScore">
+       <select id="selectScore">
       	<option value="2">2</option>
       	<option value="4">4</option>
       	<option value="6">6</option>
       	<option value="8">8</option>
       	<option value="16">16</option>
       </select>
+      <input id="new-todo" type="text" placeholder="What needs to be done?">
       
     </header>    
     
@@ -147,8 +144,11 @@
 			<li>BurnDown Chart</li>
 			<li>Preferences</li>
 		</ul>
-		<div id="menu-footer">Hi, User</div>
 	</div>
+  </script>
+  
+  <script type="text/template" id="chart-template">
+	
   </script>
 		
 	  <!--   <script src="backbone.localstorage.js"></script> -->
@@ -162,12 +162,15 @@
  <!--  <script src="js/process.js" type="text/javascript"></script>-->
  <script>
  $(document).ready(function(){
-	 var awApp = AAFClient.init();
+	 awApp = AAFClient.init();
 	 
 	 awApp.on( 'registered', function ( data ) {
-		 	
-		    setTimeout(function(){$("#userData").text("d");}, 3000);
+		    awApp.loggedinUser = data.user;
+		    console.info(awApp.loggedinUser);
 		});
+	 
+	 
+	 
  });
  </script>
  
