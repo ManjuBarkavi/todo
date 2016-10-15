@@ -210,6 +210,27 @@ $(function(){
   var MenuView = new Menu();
   
   
+  var chart = Backbone.View.extend({
+	  
+	  
+	  
+		generateChart : function(){	 
+							zingchart.render({
+								    id: 'burnDownChart',
+								    data: {
+								      type: 'line',
+								      series: [{
+								        values: [54,23,34,23,43],
+								      }, {
+								        values: [10,15,16,20,40]
+								      }]
+								    }
+								  });
+						}
+			  
+  });			  
+  
+  
   // The Application
   // ---------------
 
