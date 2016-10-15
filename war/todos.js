@@ -196,11 +196,11 @@ $(function(){
 		  				{
 			  				var template = _.template(this.template, {});
 			  				this.$el.html(template);
-			  				this.$el.fadeIn();
+			  				this.$el.show();
 		  				},
 	closeMenuBar	:	function(e)
 		  				{
-		  					this.$el.fadeOut();
+		  					this.$el.hide();
 		  				}
 		  				
 		  
@@ -274,6 +274,15 @@ $(function(){
         this.main.show();
         this.footer.show();
         this.footer.html(this.statsTemplate({done: done, remaining: remaining}));
+        
+        /*if(remaining > 0)
+        {	
+	        awApp.postMessage( 'showCount', { 
+			    'count': remaining,
+			    'id' : awApp.loggedinUser.id
+			});
+        }*/
+        
         this.hideRandomMessage();
       } else {
         this.main.hide();
