@@ -5,6 +5,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.todo.jdo.TodoListJDO;
+
 
 public class JDOService {
 
@@ -49,9 +51,9 @@ public class JDOService {
 		try {
 
 			pm = getDefaultPersistenceManager();
-
+			System.out.println(entity);
 			T entityJDO = pm.makePersistent(entity);
-
+			
 			return entityJDO;
 		} finally {
 			closePM(pm);

@@ -3,10 +3,14 @@ package com.todo.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
+import javax.jdo.PersistenceManager;
+
 import com.todo.dao.JDOService;
-import com.todo.jdo.TodoJDO;
+import com.todo.dao.PMF;
+import com.todo.jdo.TodoListJDO;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +22,7 @@ public class TodoService extends JDOService{
 	public String fetchAllTodosByContactKey(String contactKey)
 	{
 		
-		List<TodoJDO> todoList= new ArrayList<TodoJDO>();
+		List<TodoListJDO> todoList= new ArrayList<TodoListJDO>();
 		try {
 			
 			//getEntitiesByQuery(TodoJDO.class, "contactKey == '"+contactKey+"'", "dateAdded DESC");
@@ -32,32 +36,45 @@ public class TodoService extends JDOService{
 	}
 	
 	
-	public String saveTodo(String todo)
+	public String saveTodo(Map<String, Object> todo)
 	{
-		TodoJDO newTodo = new TodoJDO();
+		TodoListJDO newTodo = new TodoListJDO();
+		PersistenceManager pm = null;
+		pm = PMF.get().getPersistenceManager();
 		
 		try {
 			
 			
-			newTodo = gson.fromJson( todo, new TypeToken<TodoJDO>(){}.getType() );
-			
 			Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			
+			
+			Double orderValue = new Double(todo.get("order").toString());
+			int integerValue = orderValue.intValue();
+			
+			Double typeValue = new Double(todo.get("type").toString());
+			int intValue = typeValue.intValue();
+			
+			Double scoreValues = new Double(todo.get("score").toString());
+			int scoreIntValue = scoreValues.intValue();
+			
+			Integer order = new Integer(integerValue);
+			Integer type = new Integer(intValue);
+			Integer scoreValue = new Integer(scoreIntValue);
+			String title = (String)todo.get("title");
+			
+			newTodo.setTitle( title);
+			newTodo.setOrder(order);
+			newTodo.setType(type);
 			newTodo.setDateAdded(now.getTimeInMillis());
-			
-			
-			System.out.println( newTodo.getTitle() );
-			System.out.println( newTodo.getDateAdded() );
-			System.out.println( newTodo.getIsDone() );
-			System.out.println( newTodo.getOrder() );
-			
-			
-			System.out.println(gson.toJson(newTodo));
-			persist(todo);
+			newTodo.setScore(scoreValue);
+			newTodo.setIsDone((Boolean) todo.get("isDone"));
+			persist(newTodo);
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		
 		return gson.toJson(newTodo);
 		
