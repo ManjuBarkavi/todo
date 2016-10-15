@@ -248,7 +248,10 @@ $(function(){
       "click #toggle-all": "toggleAllComplete",
       "click #menu"	:	"showMenu",
       "click #menucontainer": "closeMenu",
-      "click #mode-switch"	:	"switchScrumMode",
+      "click .activate"	:	"switchScrumMode",
+      "click .deactivate":	"switchNormalMode",
+      "click #preferences": "showPreferences",
+      "click #popcontainer-close" : "closeMenuBar"
     },
 
    
@@ -376,20 +379,44 @@ $(function(){
     
     switchScrumMode	:	function(e) {
     	
-    	if(userPrefer.appMode)
+    	$("#mode-switch").removeClass("activate");
+    	$("#mode-switch").setmoreSlider({defaultState : "yes"});
+    	$("#mode-switch").addClass("deactivate");
+    	
+    	if(!userPrefer.appMode)
     	{
-    		//this.deactivateScrumMode();
-    		userPrefer.appMode = 0;
-    		Share.showMessage("Activated Normal Mode");
-    		this.hideScore();
-    	} else {
-    		//this.activateScrumMode();
+    		
     		userPrefer.appMode = 1;
     		Share.showMessage("Activated Scrum Mode");
     		this.showScore();
+    		
     	}
     },
     
+    switchNormalMode	:	function(e)
+    						{
+						    	$("#mode-switch").removeClass("deactivate");
+						    	$("#mode-switch").setmoreSlider({defaultState : "no"});
+						    	$("#mode-switch").addClass("activate");
+						    	
+						    	if(userPrefer.appMode)
+						    	{
+						    		//this.deactivateScrumMode();
+						    		userPrefer.appMode = 0;
+						    		Share.showMessage("Activated Normal Mode");
+						    		this.hideScore();
+						    	}
+						    	
+						    	
+    						},
+    
+    showPreferences		:	function()
+						    {
+    							var template = _.template( $( "#scrumViewTemplate" ).html());
+						    	$("#popup").html( template );
+						    	$("#popupcontainer").show();
+						    },
+    						
     showScore	:	function()
     				{
     					$("#new-todo").addClass("scrumMode");
@@ -400,7 +427,11 @@ $(function(){
     				{
 					  	$("#new-todo").removeClass("scrumMode");
 					  	$("#selectScore").hide();
-    				}
+    				},
+   closeMenuBar	:	function(e)
+	  				{
+	   					$("#popupcontainer").hide();
+	  				}
     
 
   });
