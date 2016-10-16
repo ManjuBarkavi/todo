@@ -5,10 +5,44 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import com.todo.jdo.TodoListJDO;
+import com.todo.jdo.ContactJDO;
+
+
 
 
 public class JDOService {
+	
+	
+	public ContactJDO getContactByKey(String contactKey){
+		
+		ContactJDO contact = null;
+	//get token from db
+	
+		PersistenceManager pm =null;
+	try {
+		
+		 pm = this.getDefaultPersistenceManager();
+		Query query = this.getDefaultPersistenceManager().newQuery(ContactJDO.class,"awContactKey=='"+contactKey+"'");
+		List<ContactJDO> contactlist = (List<ContactJDO>) query.execute();
+		
+		if(!contactlist.isEmpty())
+		{
+			contact = contactlist.get(0);
+		}	
+		
+		return contact;
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		if(pm != null)
+			this.closePM(pm);
+	}
+	return contact;
+	
+	}
+	
+
 
 	public PersistenceManager getDefaultPersistenceManager() {
 		return PMF.get().getPersistenceManager();
@@ -51,7 +85,7 @@ public class JDOService {
 		try {
 
 			pm = getDefaultPersistenceManager();
-			System.out.println(entity);
+			
 			T entityJDO = pm.makePersistent(entity);
 			
 			return entityJDO;
