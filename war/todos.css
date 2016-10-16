@@ -244,16 +244,17 @@ body {
 
 #voicebox {
 	text-align: center;
-    background-color: #FDD835;
-    font-weight: bold;
-    top: 0px;
-    margin-left: -2px;
-    position: absolute;
-    width: 292px;
-    border-radius: 0px 0px 5px 5px;
-    height: 30px;
-    line-height: 2;
-    display:none;
+	background-color: #FDD835;
+	font-weight: bold;
+	top: 0px;
+	margin-left: -2px;
+	position: absolute;
+	width: 265px;
+	border-radius: 0px 0px 5px 5px;
+	height: 30px;
+	line-height: 2;
+	display:none;
+	z-index: 3;
 }
 #randomMsg {
 	margin-top: 50%;
