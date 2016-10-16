@@ -330,9 +330,10 @@ $(function(){
 		  				},
 		  render	:	function()
 		  				{
-			  				var template = _.template(this.template, {});
-			  				this.$el.html(template);
-			  				this.$el.show();
+			  					var template = _.template(this.template, {});
+				  				this.$el.html(template);
+				  				this.$el.show();
+			  				
 		  				},
 	closeMenuBar	:	function(e)
 		  				{
@@ -543,6 +544,7 @@ $(function(){
     },
     
     showMenu	:	function() {
+    	
     	MenuView.render();
     },
     
@@ -552,9 +554,10 @@ $(function(){
     
     switchScrumMode	:	function(e) {
     	
-    	$("#mode-switch").removeClass("activate");
-    	$("#mode-switch").setmoreSlider({defaultState : "yes"});
-    	$("#mode-switch").addClass("deactivate");
+    	$("#activateScrumMode").removeClass("activate");
+    	$("#deactivateScrumMode").show();
+    	$("#activateScrumMode").hide();
+    	$("#deactivateScrumMode").addClass("deactivate");
     	
     	if(!userPrefer.appMode)
     	{
@@ -568,9 +571,10 @@ $(function(){
     
     switchNormalMode	:	function(e)
     						{
-						    	$("#mode-switch").removeClass("deactivate");
-						    	$("#mode-switch").setmoreSlider({defaultState : "no"});
-						    	$("#mode-switch").addClass("activate");
+						    	$("#deactivateScrumMode").removeClass("deactivate");
+						    	$("#deactivateScrumMode").hide();
+						    	$("#activateScrumMode").show();
+						    	$("#activateScrumMode").addClass("activate");
 						    	
 						    	if(userPrefer.appMode)
 						    	{

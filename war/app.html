@@ -51,8 +51,9 @@
     <header>
       <div style="padding-bottom: 20px;">
       	<i id="menu" class="fa fa-bars" style="font-size: 22px;cursor: pointer;"></i>
-      	<span style="margin-left: 80px;font-size: 24px;font-weight: bold;">Todos</span>
-      	
+      	<span style="margin-left: 80px;font-size: 24px;font-weight: bold;">Todo's</span>
+      	<img id="activateScrumMode" class="activate" src="/images/scrum-bg.png" alt="Switch Mode">
+      	<img id="deactivateScrumMode" src="/images/scrum-bg1.png" alt="Switch Mode">
       </div>
       <div id="menucontainer"></div>
        <select id="selectScore">
@@ -114,15 +115,7 @@
   
   <script type="text/template" id="scrumViewTemplate">
 	<div id="scrumPreference">
-			<span class="headerLabel">Scrum Mode</span>
-			<div class="viewSlider">
-      		<div id="mode-switch" title="change the app mode" class="slider_holder staffhours sliderdone activate">
-      			<input type="hidden" class="sliderVal" value="no">
-      			<span class="slider_off sliders" style="left: 1px;"> OFF </span>
-      			<span class="slider_on sliders" style="left: -57px;"> ON </span>
-      			<span class="slider_switch" style="left: 1px;"></span>
-      		</div>
-      		</div>
+			<span id="topHeader">Preferences</span>
 	</div>	
 	<div id="sprint">
 			<span class="sprintDuration">Sprint Duration</span>
