@@ -25,7 +25,7 @@ public class TodoService extends JDOService{
 		List<TodoListJDO> todoList= new ArrayList<TodoListJDO>();
 		try {
 			
-			todoList = getEntitiesByQuery(TodoListJDO.class, "contactKey == '"+contactKey+"'", "dateAdded DESC");
+			todoList = getEntitiesByQuery(TodoListJDO.class, "status != inactive && contactKey == '"+contactKey+"'", "dateAdded DESC");
 			return gson.toJson(todoList);
 			
 		} catch(Exception e) {
@@ -129,6 +129,28 @@ public class TodoService extends JDOService{
 
 	
 	return gson.toJson(newTodo);
+		
+	}
+	
+	
+	public String deleteTodo(Map<String, Object> todo)
+	{
+		TodoListJDO newTodo = null;
+		PersistenceManager pm = null;
+		pm = PMF.get().getPersistenceManager();
+		
+		try {
+			
+			newTodo = pm.getObjectById(TodoListJDO.class, todo.get("key"));
+			newTodo.setStatus("inactive");
+			pm.makePersistent(newTodo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pm.close();
+		}
+		return gson.toJson(newTodo);
 		
 	}
 	
