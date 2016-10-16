@@ -324,6 +324,54 @@ body {
 	float: right;
 }
 
+.slider_switch
+{
+	background: url(/images/switch-btn.png) left top no-repeat;
+	height: 24px;
+    left: 38px;
+    position: absolute;
+    width: 25px;
+}
+
+.sliders {
+    line-height: 23px;
+    float: left;
+    width: 60px;
+    position: absolute;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+}
+
+.slider_off {
+    background: url(/images/switch-bg.png) -57px 0px no-repeat;
+    left: 60px;
+    text-indent: 26px;
+    color: #000 !important;
+}
+
+.slider_on {
+    background: url(/images/switch-bg.png) 0px 0px no-repeat;
+    text-indent: 10px;
+    left: 2px;
+}
+
+.slider_holder {
+    float: left;
+    /* margin-top: 3px; */
+    overflow-x: hidden;
+    padding-left: 0px;
+    position: relative;
+    width: 60px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.viewSlider{
+	    float: right;
+    margin-top: -3px;
+}
+
 #popupcontainer {
 	width: 300px;
 	height: 430px;
@@ -355,6 +403,44 @@ body {
     margin-top: 12px;
     font-size: 22px;
     display: none;
+}
+
+.dropdown-menu{
+	min-width: 20px !important;
+	width: 60px !important;
+	max-height: 140px;
+	overflow-y: scroll;
+}
+
+#sprint{
+	margin-top: 20px;
+}
+
+.headerLabel{
+	font-size: large;
+}
+
+.btn-group{
+	    float: right;
+	    clear: both;
+    margin-top: -33px;
+}
+
+.sprintDuration{
+	float: left;
+    margin-top: 7px;
+    font-size: large;
+}
+.dropdown-toggle{
+	border-bottom: solid 1px #555555;
+    border-radius: 0px;
+    padding: 0px;
+    font-size: 20px;
+    width: 58px;
+}
+
+#scrumPreference{
+	margin-top:35px;
 }
 
 #burnDownChart {

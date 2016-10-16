@@ -7,14 +7,20 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
 	<link rel="stylesheet" href="fonts/fontawesome-webfont.woff2" type="application/octet-stream">
 	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="/todos.css">
+	
 	<script src="lib/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="lib/underscore.js" type="text/javascript" charset="utf-8"></script>
 	<script src="lib/backbone.js" type="text/javascript" charset="utf-8"></script>
 	<script src="lib/zingchart2.4.1/zingchart.min.js" type="text/javascript" charset="utf-8"></script>
 	
 	
-	<link rel="stylesheet" href="/todos.css">
 	
+	
+	<script src="/js/commonFunctions.js" type="text/javascript"></script>
 	<script src="lib/aaf_sdk.js" type="text/javascript" charset="utf-8"></script>
 	  
  <script>
@@ -46,7 +52,7 @@
       <div style="padding-bottom: 20px;">
       	<i id="menu" class="fa fa-bars" style="font-size: 22px;cursor: pointer;"></i>
       	<span style="margin-left: 80px;font-size: 24px;font-weight: bold;">Todos</span>
-      	<span id="mode-switch">Activate</span>
+      	
       </div>
       <div id="menucontainer"></div>
        <select id="selectScore">
@@ -100,10 +106,63 @@
 		<div id="menu-close">&times;</div>
 		<ul id="sideMenu-list">
 			<li id="burndownlist"><i class="fa fa-line-chart"></i>  BurnDown Chart</li>
-			<li id="preferenceslist"><i class="fa fa-gear"></i>  Preferences</li>
+			<li id="preferences"><i class="fa fa-gear"></i>  Preferences</li>
 			<div id="menu-footer" class="signin">Sign in</div>
 		</ul>
 	</div>
+  </script>
+  
+  <script type="text/template" id="scrumViewTemplate">
+	<div id="scrumPreference">
+			<span class="headerLabel">Scrum Mode</span>
+			<div class="viewSlider">
+      		<div id="mode-switch" title="change the app mode" class="slider_holder staffhours sliderdone activate">
+      			<input type="hidden" class="sliderVal" value="no">
+      			<span class="slider_off sliders" style="left: 1px;"> OFF </span>
+      			<span class="slider_on sliders" style="left: -57px;"> ON </span>
+      			<span class="slider_switch" style="left: 1px;"></span>
+      		</div>
+      		</div>
+	</div>	
+	<div id="sprint">
+			<span class="sprintDuration">Sprint Duration</span>
+			<div class="btn-group ">
+				<a class="btn dropdown-toggle " data-toggle="dropdown">1 <span class="caret"></span></a>
+			    <ul id="staffHours_s_c358_mo" class="dropdown-menu">
+				    <li><a href="javascript:void(0);" index="0">1</a></li>
+					<li><a href="javascript:void(0);" index="1">2</a></li>
+					<li><a href="javascript:void(0);" index="2">3</a></li>
+					<li><a href="javascript:void(0);" index="3">4</a></li>
+					<li><a href="javascript:void(0);" index="4">5</a></li>
+					<li><a href="javascript:void(0);" index="5">6</a></li>
+					<li><a href="javascript:void(0);" index="6">7</a></li>
+					<li><a href="javascript:void(0);" index="7">8</a></li>
+					<li><a href="javascript:void(0);" index="8">9</a></li>
+					<li><a href="javascript:void(0);" index="9">10</a></li>
+					<li><a href="javascript:void(0);" index="10">11</a></li>
+					<li><a href="javascript:void(0);" index="11">12</a></li>
+					<li><a href="javascript:void(0);" index="12">13</a></li>
+					<li><a href="javascript:void(0);" index="13">14</a></li>
+					<li><a href="javascript:void(0);" index="14">15</a></li>
+					<li><a href="javascript:void(0);" index="15">16</a></li>
+					<li><a href="javascript:void(0);" index="16">17</a></li>
+					<li><a href="javascript:void(0);" index="17">18</a></li>
+					<li><a href="javascript:void(0);" index="18">19</a></li>
+					<li><a href="javascript:void(0);" index="19">20</a></li>
+					<li><a href="javascript:void(0);" index="20">21</a></li>
+					<li><a href="javascript:void(0);" index="21">22</a></li>
+					<li><a href="javascript:void(0);" index="22">23</a></li>
+					<li><a href="javascript:void(0);" index="23">24</a></li>
+					<li><a href="javascript:void(0);" index="24">25</a></li>
+					<li><a href="javascript:void(0);" index="25">26</a></li>
+					<li><a href="javascript:void(0);" index="26">27</a></li>
+					<li><a href="javascript:void(0);" index="27">28</a></li>
+					<li><a href="javascript:void(0);" index="28">29</a></li>
+					<li><a href="javascript:void(0);" index="29">30</a></li>
+				</ul>
+				</div>
+				</div>
+
   </script>
   
   <div id="burnDownChart"></div>

@@ -392,7 +392,8 @@ $(function(){
       "click #menucontainer"		:	"closeMenu",
       "click #mode-switch"			:	"switchScrumMode",
       "click #popupcontainer-close" :	"closePopup",
-      "click #shareChart"			:	"getBase64Image"
+      "click #shareChart"			:	"getBase64Image",
+      "click #preferences"			:	"showPreferences"	  
     },
 
    
@@ -414,15 +415,15 @@ $(function(){
       var _this = this;
 
       $.ajax({
-      url: "/todo",
-      type:"GET",
-      success:function(data){
-    	  if(data.length > 0){
-      data = JSON.parse(data);
-      Todos = new TodoList(data);
-      _this.addAll();
-    	  }
-      }
+	      url: "/todo",
+	      type:"GET",
+	      success:function(data){
+	    	  if(data.length > 0){
+	      data = JSON.parse(data);
+	      Todos = new TodoList(data);
+	      _this.addAll();
+	    	  }
+	      }
       });
 
 
@@ -538,19 +539,43 @@ $(function(){
     
     switchScrumMode	:	function(e) {
     	
-    	if(userPrefer.appMode)
+    	$("#mode-switch").removeClass("activate");
+    	$("#mode-switch").setmoreSlider({defaultState : "yes"});
+    	$("#mode-switch").addClass("deactivate");
+    	
+    	if(!userPrefer.appMode)
     	{
-    		//this.deactivateScrumMode();
-    		userPrefer.appMode = 0;
-    		Share.showMessage("Activated Normal Mode");
-    		this.hideScore();
-    	} else {
-    		//this.activateScrumMode();
+    		
     		userPrefer.appMode = 1;
     		Share.showMessage("Activated Scrum Mode");
     		this.showScore();
+    		
     	}
     },
+    
+    switchNormalMode	:	function(e)
+    						{
+						    	$("#mode-switch").removeClass("deactivate");
+						    	$("#mode-switch").setmoreSlider({defaultState : "no"});
+						    	$("#mode-switch").addClass("activate");
+						    	
+						    	if(userPrefer.appMode)
+						    	{
+						    		//this.deactivateScrumMode();
+						    		userPrefer.appMode = 0;
+						    		Share.showMessage("Activated Normal Mode");
+						    		this.hideScore();
+						    	}
+						    	
+						    	
+    						},
+    
+    showPreferences		:	function()
+						    {
+    							var template = _.template( $( "#scrumViewTemplate" ).html());
+						    	$("#popup").html( template );
+						    	$("#popupcontainer").show();
+						    },
     
     showScore	:	function()
     				{
