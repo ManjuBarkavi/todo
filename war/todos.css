@@ -17,9 +17,9 @@ body {
 
 #todoapp {
 	background: #fff;
-	width: 280px;
+	width: 300px;
 	padding: 10px;
-	height: 410px;
+	height: 430px;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
 	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
 	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
@@ -47,14 +47,14 @@ body {
 
 #todoapp input[type="text"] {
 	color: #555555;
-	width: 267px;
+	width: 278px;
 	font-size: 21px;
 	font-family: inherit;
 	line-height: 1.4em;
 	outline: none;
 	/* margin-left: -10px; */
 	padding: 6px;
-	height: 20px;
+	height: 29px;
 	border: none;
 	border-bottom: 1px solid #3b99fc;
 	text-transform: capitalize;
@@ -160,7 +160,7 @@ body {
 	color: #555555;
 	background: #f4fce8;
 	border-top: 1px solid #ededed;
-	padding: 0 20px;
+	padding: 0 11px;
 	line-height: 37px;
 	/* -webkit-border-radius: 0 0 5px 5px; */
 	-moz-border-radius: 0 0 5px 5px;
@@ -233,7 +233,7 @@ body {
 }
 
 #todo-list-container {
-	width: 280px;
+	width: 300px;
 	margin-left: -10px;
 }
 
