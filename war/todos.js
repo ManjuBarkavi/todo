@@ -387,10 +387,12 @@ $(function(){
       "click #toggle-all"			:	"toggleAllComplete",
       "click #menu"					:	"showMenu",
       "click #menucontainer"		:	"closeMenu",
-      "click #mode-switch"			:	"switchScrumMode",
       "click #popupcontainer-close" :	"closePopup",
       "click #shareChart"			:	"getBase64Image",
-      "click #preferences"			:	"showPreferences"	  
+      "click #preferences"			:	"showPreferences",
+      "click .activate"				:	"switchScrumMode",
+      "click .deactivate"			:	"switchNormalMode",
+      "click #staffHours_s_c358_mo li a"	:	"getScrumDuration"
     },
 
    
@@ -573,6 +575,12 @@ $(function(){
 						    	$("#popup").html( template );
 						    	$("#popupcontainer").show();
 						    },
+						    
+	getScrumDuration	:	function(e)
+							{
+		  						var numOfDays = $(e.currentTarget).html();
+		  						var sprintDuration = $(".dropdown-toggle").html(numOfDays+"<span class='caret'style='margin-left:10px'></span>");
+							},
     
     showScore	:	function()
     				{
