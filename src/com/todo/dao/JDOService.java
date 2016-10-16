@@ -7,16 +7,13 @@ import javax.jdo.Query;
 
 import com.todo.jdo.ContactJDO;
 
-
-
-
 public class JDOService {
-	
 	
 	public ContactJDO getContactByKey(String contactKey){
 		
 		ContactJDO contact = null;
-	//get token from db
+		
+		//get token from db
 	
 		PersistenceManager pm =null;
 	try {
