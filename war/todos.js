@@ -307,7 +307,7 @@ $(function(){
 							this.showChart();
 						},
 		showChart	 :	function() {
-							$("#popup").append( $("#burnDownChart") );
+							$("#popup").html( $("#burnDownChart") );
 							$("#popupcontainer").show();
 							$("#burnDownChart").append($("#shareChart"));
 							$("#shareChart").show();
@@ -412,21 +412,26 @@ $(function(){
       Todos.fetch();
       
       var _this = this;
-
-      $.ajax({
-	      url: "/todo",
-	      type:"GET",
-	      success:function(data){
-	    	  if(data.length > 0){
-	      data = JSON.parse(data);
-	      Todos = new TodoList(data);
-	      _this.addAll();
-	    	  }
-	      }
-      });
-
-
-      console.log(Todos);
+      setTimeout(function(){ 
+	      
+	
+	      var url = awApp.loggedinUser ? "/todo?contactKey="+awApp.loggedinUser.id : "/todo";
+	      $.ajax({
+		      url: url,
+		      type:"GET",
+		      success:function(data){
+		    	  if(data.length > 0){
+		      data = JSON.parse(data);
+		      Todos = new TodoList(data);
+		      _this.addAll();
+		      _this.render();
+		    	  }
+		      }
+	      });
+	
+	
+	      console.log(Todos);
+     },300);
       
     },
 

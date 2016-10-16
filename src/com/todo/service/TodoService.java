@@ -36,16 +36,14 @@ public class TodoService extends JDOService{
 	}
 	
 	
-	public String saveTodo(Map<String, Object> todo)
+	public String saveTodo(Map<String, Object> todo, String contactKey)
 	{
 		TodoListJDO newTodo = new TodoListJDO();
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		try {
 			
-			
 			Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			
 			
 			Double orderValue = new Double(todo.get("order").toString());
 			int integerValue = orderValue.intValue();
@@ -62,6 +60,7 @@ public class TodoService extends JDOService{
 			String title = (String)todo.get("title");
 			
 			newTodo.setTitle( title);
+			newTodo.setContactKey( contactKey);
 			newTodo.setOrder(order);
 			newTodo.setType(type);
 			newTodo.setDateAdded(now.getTimeInMillis());

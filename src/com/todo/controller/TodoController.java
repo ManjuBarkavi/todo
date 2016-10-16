@@ -32,12 +32,11 @@ public class TodoController
 	}
 	
 	@RequestMapping(value="/todo", method = RequestMethod.POST)
-	  public @ResponseBody String saveTodo(HttpServletRequest request, HttpServletResponse response, @RequestBody String todo ) {
+	  public @ResponseBody String saveTodo(HttpServletRequest request, HttpServletResponse response, @RequestBody String todo,@RequestParam(value="contactKey", required = false) String contactKey ) {
 		Map<String, Object> jsonJavaRootObject = new Gson().fromJson(todo, Map.class);
-		return _todoService.saveTodo(jsonJavaRootObject);
+		return _todoService.saveTodo(jsonJavaRootObject, contactKey);
 		
 	}
-	
 	
 	@RequestMapping(value="/todo/{key}", method = RequestMethod.PUT)
 	  public @ResponseBody String updateTodo(HttpServletRequest request, HttpServletResponse response,@PathVariable("key") String key, @RequestBody String todo ) {

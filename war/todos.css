@@ -384,6 +384,7 @@ body {
 	background-color: white;
 	/* opacity: 0.7; */
 	display: none;
+	overflow: hidden;
 }
 
 #popup {
@@ -402,7 +403,7 @@ body {
 
 #selectScore {
     position: absolute;
-    /* margin-top: 0px; */
+    margin-top: 9px; 
     font-size: 22px;
     display: none;
 }
