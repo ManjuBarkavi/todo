@@ -382,18 +382,18 @@ $(function(){
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-      "keypress #new-todo"			:	"createOnEnter",
-      "click #clear-completed"		:	"clearCompleted",
-      "click #toggle-all"			:	"toggleAllComplete",
-      "click #menu"					:	"showMenu",
-      "click #menucontainer"		:	"closeMenu",
-      "click #popupcontainer-close" :	"closePopup",
-      "click #shareChart"			:	"getBase64Image",
-      "click #preferences"			:	"showPreferences",
-      "click .activate"				:	"switchScrumMode",
-      "click .deactivate"			:	"switchNormalMode",
-      "click #staffHours_s_c358_mo li a"	:	"getScrumDuration"
-    },
+    	"keypress #new-todo"	:	"createOnEnter",
+    	"click #clear-completed"	:	"clearCompleted",
+    	"click #toggle-all"	:	"toggleAllComplete",
+    	"click #menu"	:	"showMenu",
+    	"click #menucontainer"	:	"closeMenu",
+    	"click #popupcontainer-close" :	"closePopup",
+    	"click #shareChart"	:	"getBase64Image",
+    	"click #preferences"	:	"showPreferences",
+    	"click .activate"	:	"switchScrumMode",
+    	"click .deactivate"	:	"switchNormalMode",
+    	"click #staffHours_s_c358_mo li a"	:	"getScrumDuration"
+    	},
 
    
     initialize: function() {
@@ -401,7 +401,7 @@ $(function(){
       this.input = this.$("#new-todo");
       this.allCheckbox = this.$("#toggle-all")[0];
 
-      this.listenTo(Todos, 'add', this.addOne);
+     // this.listenTo(Todos, 'add', this.addOne);
       this.listenTo(Todos, 'reset', this.addAll);
       this.listenTo(Todos, 'all', this.render);
 
@@ -518,8 +518,16 @@ $(function(){
       if (e.keyCode != 13) return;
       if (!this.input.val()) return;
 
-      Todos.create({title: this.input.val()});
+      if(userPrefer.appMode)
+	  	{
+	  		todo.set("score",parseInt($("#selectScore").val()));
+	  	}
+      
+      
+      var todo = Todos.create({title: this.input.val()});
       this.input.val('');
+      var view = new TodoView({model: todo});
+      this.$("#todo-list").append(view.render().el);
     },
 
     // Clear all done todo items, destroying their models.
@@ -581,11 +589,11 @@ $(function(){
 						    	$("#popupcontainer").show();
 						    },
 						    
-	getScrumDuration	:	function(e)
-							{
-		  						var numOfDays = $(e.currentTarget).html();
-		  						var sprintDuration = $(".dropdown-toggle").html(numOfDays+"<span class='caret'style='margin-left:10px'></span>");
-							},
+    getScrumDuration	:	function(e)
+						    {
+						    var numOfDays = $(e.currentTarget).html();
+						    var sprintDuration = $(".dropdown-toggle").html(numOfDays+"<span class='caret'style='margin-left:10px'></span>");
+						    },    
     
     showScore	:	function()
     				{
