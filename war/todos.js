@@ -19,6 +19,13 @@ $(function(){
   // Our basic **Todo** model has `title`, `order`, and `done` attributes.
   var Todo = Backbone.Model.extend({
 
+	  url : function(){
+		  	
+		  	if(awApp.loggedinUser)
+		  		return "/todo?contactKey="+awApp.loggedinUser.id;
+		  	else
+		  		return "/todo";
+	  },
     // Default attributes for the todo item.
     defaults: function() {
       return {
@@ -54,7 +61,14 @@ $(function(){
 
     // Save all of the todo items under the `"todos-backbone"` namespace.
     //localStorage: new Backbone.LocalStorage("todos-backbone"),
-    url:"/todo",
+    url: function() {
+    	if(awApp.loggedinUser){
+    		return "/todo?contactKey="+awApp.loggedinUser.id;
+    		
+    	} else {
+    		return "/todo";
+    	}
+    },
 
     // Filter down the list of all todo items that are finished.
     done: function() {
@@ -167,7 +181,23 @@ $(function(){
 	  
 	  shareAsFeed	:	function(model)
 	  					{
-		  					this.showMessage("Shared!");
+		  					if(awApp.loggedinUser)
+		  					{
+		  					$.ajax({
+		  						
+		  						url:"/sendFeed?contactKey"+awApp.loggedinUser.id+"&feed=Completed - "+model.get('title'),
+		  						type:"POST",
+		  						success : function(data)
+		  						{
+		  							Share.showMessage("Feed Posted!");
+		  						},
+		  						error : function(data)
+		  						{
+		  							console.log(data);
+		  						}
+		  					});
+		  					}
+		  					//this.showMessage("Shared!");
 		  					return true;
 	  					},
 	  	showMessage	:	function(message)
@@ -183,13 +213,188 @@ $(function(){
   
   var Share = new ShareView;
   
-  
+  var chart = Backbone.View.extend({
+	  
+	  
+	  
+		generateChart : function()	{	
+			
+							/*var duration = 14;
+							var xaxis = [];
+							for(var k = duration; k<=duration && k!=-1; k--)
+							{
+								xaxis.push(k);
+							}*/	
+			
+							console.log(Todos);
+							
+							var total = Todos.pluck("score");
+							var totalEffort = 0;
+							for(var j=0; j< total.length; j++)
+							{
+								totalEffort = totalEffort +total[j];
+							}
+							
+							var done = Todos.done();
+							var scores = []
+							for(var i=0; i< done.length; i++)
+							{
+								var model = done[i].toJSON();
+								scores[i] =  model.score;
+							}	
+							
+							
+							/*var ideal = [0];
+							for(var i=0; i <total.length; i++)
+							{
+								var model = total[i].toJSON();
+								//temp.push(model.score);
+								ideal[0] = ideal[0]+model.score;
+							}
+							
+							if(ideal.indexOf(0) == -1)
+							{
+								ideal.push(0);
+							}*/
+							
+							
+							/*var max = function( array ){
+							    return Math.max.apply( Math, array );
+							};
+							
+							var ideal = [];
+							
+							ideal[0] = max(temp);
+							ideal[1] = 0;*/
+							
+								
+							
+							/*var burned = [];
+							for(var j=0; j<done.length; j++)
+							{
+								var model = done[j].toJSON();
+								burned.push(model.score);
+							}
+							
+							var getSum = function (total, num) {
+							    return total + num;
+							}
+							
+							if(burned.reduce(getSum) == ideal[0])
+							{
+								burned.push(0);
+							}*/
+							//var totalEffort = 70;
+							var sprintDuration = 7;
+							var idealLine = [ [0,totalEffort],[sprintDuration,0] ];
+							
+							//var burnLine = [ [0,totalEffort],[1,(totalEffort-10)],[2,(totalEffort-15)],[3,(totalEffort-35)],[4,(totalEffort-40)],[5,(totalEffort-50)],[6,(totalEffort-60)],[7,(totalEffort-70)] ];
+							
+							
+							/*var burnLine = [0,1,2,3,4,5,6,7];
+							
+							
+							
+							//int[][] burnLine = new int[sprintDuration][10];
+							
+							for(var i=0; i<sprintDuration; i++)
+							{
+								burnLine[i][i] = [(totalEffort-10)];
+							}*/	
+							
+							var burnLine = [[0,totalEffort]];
+							for(var k=1; k<=sprintDuration; k++)
+							{
+								if(scores[k-1])
+									burnLine[k] = [k,(totalEffort-scores[k-1])];
+							}	
+							
+							/*var burnLine = [];
+							for ( var i = 0; i < sprintDuration ; i++) {
+								if(!burnLine[i])
+									burnLine[i] = [];
+							    for ( var j = 0; j < 1 ; j++)
+							    	burnLine[i][j] = totalEffort-10; 
+							         
+							}*/
+							
+							zingchart.render({
+								    id: 'burnDownChart',
+								    data: {
+								    	
+								      type: 'line',
+								      title: {
+								    	    "text": "Burn Down Chart"
+								    	  },
+								      
+								      legend: {
+								    	    "header": {
+								    	      "text": "Legend"
+								    	    },
+								    	    "draggable": true,
+								    	    "drag-handler": "icon"
+								    	  },
+								    	  
+								    	  "scale-x": {
+								    		    "label": {
+								    		      "text": "Duration"
+								    		    }
+								    		  },
+								    		  
+								    	  /*"scale-y": {
+								    		    "label": {
+								    		      "text": "Velocity"
+								    		    }
+								    		  },*/
+								    		  /*"scale-y": {
+								    			    "progression": "log",
+								    			    "log-base": 10,
+								    			    "label": {
+								    		      "text": "Velocity"
+								    		    }
+								    			  },*/
+								    		  
+								    		  "scale-y":{
+								    			    "values":"0:"+totalEffort+":1",
+								    		  },
+								    		  
+								    		  "scale-x":{
+								    			    "values":"0:"+sprintDuration+":1",
+								    		  },
+								    		  
+								           series: [{
+								        values: burnLine,//[54,23,34,23,43,54,23,34,23,43],
+								      }, {
+								        values: idealLine,//[40,14]
+								      }]
+									      
+								    }
+								  });
+							
+							$("#burnDownChart-graph-id0-legend-item_0 tspan").text("Burned");
+							$("#burnDownChart-graph-id0-legend-item_1 tspan").text("Ideal");
+							
+							this.showChart();
+						},
+		showChart	 :	function() {
+							$("#popup").append( $("#burnDownChart") );
+							$("#popupcontainer").show();
+							$("#burnDownChart").append($("#shareChart"));
+							$("#shareChart").show();
+						},
+					
+  });		
+
+  var chartView = new chart;
+    
   var Menu = Backbone.View.extend({
 	  
 		  el		:	$("#menucontainer"),
 		  template	:   $("#menu-template").html(),
 		  events	:	{
-			  				"click #menu-close" : "closeMenuBar"
+			  				"click #menu-close"		: "closeMenuBar",
+			  				"click #burndownlist"	: "generateChart",
+			  				"click .signin"			: "signin"
 			  				
 		  				},
 		  render	:	function()
@@ -201,34 +406,38 @@ $(function(){
 	closeMenuBar	:	function(e)
 		  				{
 		  					this.$el.hide();
-		  				}
-		  				
-		  
-	  
+		  				},
+	generateChart	:	function()
+						{
+							chartView.generateChart();
+						},
+		signin		:	function()
+						{
+							$.ajax({
+								
+								//url: "https://access.anywhereworks.com/o/oauth2/auth?response_type=code&client_id=29354-03ca85f7a4dd032e86c3c0842f67a418&scope=awapis.notifications.write%20awapis.chat.streams.push%20awapis.streams.read%20awapis.users.read%20awapis.feeds.write%20awapis.identity%20awapis.account.read%20&redirect_uri=http://todo-scrum-live.appspot.com/oauth/callback&approval_prompt=force&access_type=offline&state="+awApp.loggedinUser.id,
+								url: "/getCode?awContactKey="+awApp.loggedinUser.id,
+								type: "GET",
+								success : function(data)
+											{
+												if(data == "success")
+												{
+													Share.showMessage("Signed in successfully");
+												} else {
+													Share.showMessage("Something went wrong!");
+												}
+											},
+								error	:	function()
+											{
+													Share.showMessage("Something went wrong!");
+											}
+								
+							});
+						}
+		
   });
   
   var MenuView = new Menu();
-  
-  
-  var chart = Backbone.View.extend({
-	  
-	  
-	  
-		generateChart : function(){	 
-							zingchart.render({
-								    id: 'burnDownChart',
-								    data: {
-								      type: 'line',
-								      series: [{
-								        values: [54,23,34,23,43],
-								      }, {
-								        values: [10,15,16,20,40]
-								      }]
-								    }
-								  });
-						}
-			  
-  });			  
   
   
   // The Application
@@ -243,15 +452,14 @@ $(function(){
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-      "keypress #new-todo":  "createOnEnter",
-      "click #clear-completed": "clearCompleted",
-      "click #toggle-all": "toggleAllComplete",
-      "click #menu"	:	"showMenu",
-      "click #menucontainer": "closeMenu",
-      "click .activate"	:	"switchScrumMode",
-      "click .deactivate":	"switchNormalMode",
-      "click #preferences": "showPreferences",
-      "click #popcontainer-close" : "closeMenuBar"
+      "keypress #new-todo"			:	"createOnEnter",
+      "click #clear-completed"		:	"clearCompleted",
+      "click #toggle-all"			:	"toggleAllComplete",
+      "click #menu"					:	"showMenu",
+      "click #menucontainer"		:	"closeMenu",
+      "click #mode-switch"			:	"switchScrumMode",
+      "click #popupcontainer-close" :	"closePopup",
+      "click #shareChart"			:	"getBase64Image"
     },
 
    
@@ -269,6 +477,24 @@ $(function(){
       
       $("#new-todo").focus();
       Todos.fetch();
+      
+      var _this = this;
+
+      $.ajax({
+      url: "/todo",
+      type:"GET",
+      success:function(data){
+    	  if(data.length > 0){
+      data = JSON.parse(data);
+      Todos = new TodoList(data);
+      _this.addAll();
+    	  }
+      }
+      });
+
+
+      console.log(Todos);
+      
     },
 
     // Re-rendering the App just means refreshing the statistics -- the rest
@@ -299,13 +525,13 @@ $(function(){
         this.footer.show();
         this.footer.html(this.statsTemplate({done: done, remaining: remaining}));
         
-        /*if(remaining > 0)
+        if(remaining > 0 && awApp.loggedinUser)
         {	
 	        awApp.postMessage( 'showCount', { 
 			    'count': remaining,
 			    'id' : awApp.loggedinUser.id
 			});
-        }*/
+        }
         
         this.hideRandomMessage();
       } else {
@@ -379,44 +605,20 @@ $(function(){
     
     switchScrumMode	:	function(e) {
     	
-    	$("#mode-switch").removeClass("activate");
-    	$("#mode-switch").setmoreSlider({defaultState : "yes"});
-    	$("#mode-switch").addClass("deactivate");
-    	
-    	if(!userPrefer.appMode)
+    	if(userPrefer.appMode)
     	{
-    		
+    		//this.deactivateScrumMode();
+    		userPrefer.appMode = 0;
+    		Share.showMessage("Activated Normal Mode");
+    		this.hideScore();
+    	} else {
+    		//this.activateScrumMode();
     		userPrefer.appMode = 1;
     		Share.showMessage("Activated Scrum Mode");
     		this.showScore();
-    		
     	}
     },
     
-    switchNormalMode	:	function(e)
-    						{
-						    	$("#mode-switch").removeClass("deactivate");
-						    	$("#mode-switch").setmoreSlider({defaultState : "no"});
-						    	$("#mode-switch").addClass("activate");
-						    	
-						    	if(userPrefer.appMode)
-						    	{
-						    		//this.deactivateScrumMode();
-						    		userPrefer.appMode = 0;
-						    		Share.showMessage("Activated Normal Mode");
-						    		this.hideScore();
-						    	}
-						    	
-						    	
-    						},
-    
-    showPreferences		:	function()
-						    {
-    							var template = _.template( $( "#scrumViewTemplate" ).html());
-						    	$("#popup").html( template );
-						    	$("#popupcontainer").show();
-						    },
-    						
     showScore	:	function()
     				{
     					$("#new-todo").addClass("scrumMode");
@@ -428,16 +630,31 @@ $(function(){
 					  	$("#new-todo").removeClass("scrumMode");
 					  	$("#selectScore").hide();
     				},
-   closeMenuBar	:	function(e)
-	  				{
-	   					$("#popupcontainer").hide();
-	  				}
-    
+    				
+    closePopup	:	function()
+				    {
+				    	$("#popupcontainer").hide();
+				    },
+				    
+getBase64Image	:	function() {
+						var img = $("#burnDownChart-img"); 
+					    var canvas = document.createElement("canvas");
+					    canvas.width = img.width;
+					    canvas.height = img.height;
 
+					    var ctx = canvas.getContext("2d");
+					    ctx.drawImage(img, 0, 0);
+
+					    var dataURL = canvas.toDataURL("image/png");
+
+					    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+					}
+	
   });
 
   // Finally, we kick things off by creating the **App**.
   var App = new AppView;
+  
   
  
 });

@@ -25,7 +25,7 @@ body {
 	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
 	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
-	-webkit-border-radius: 0 0 5px 5px;
+	/* -webkit-border-radius: 0 0 5px 5px; */
 	-moz-border-radius: 0 0 5px 5px;
 	-ms-border-radius: 0 0 5px 5px;
 	-o-border-radius: 0 0 5px 5px;
@@ -243,21 +243,21 @@ body {
 
 #voicebox {
 	text-align: center;
-	background-color: #FDD835;
-	font-weight: bold;
-	top: 0px;
-	margin-left: -2px;
-	position: absolute;
-	width: 292px;
-	border-radius: 0px 0px 5px 5px;
-	height: 30px;
-	line-height: 2;
-	display:none;
-	z-index: 1;
+    background-color: #FDD835;
+    font-weight: bold;
+    top: 0px;
+    margin-left: -2px;
+    position: absolute;
+    width: 292px;
+    border-radius: 0px 0px 5px 5px;
+    height: 30px;
+    line-height: 2;
+    display:none;
 }
 #randomMsg {
 	margin-top: 50%;
 	text-align: center;
+	font-style: italic;
 }
 #menucontainer {
 	display:none;
@@ -317,58 +317,11 @@ body {
 	padding-left: 10px;
 	padding-top: 10px;
 	border-top: solid 1px #ccc;
+	display: none;
 }
 
 #mode-switch {
-	float: left;
-}
-
-.slider_switch
-{
-	background: url(/images/switch-btn.png) left top no-repeat;
-	height: 24px;
-    left: 38px;
-    position: absolute;
-    width: 25px;
-}
-
-.sliders {
-    line-height: 23px;
-    float: left;
-    width: 60px;
-    position: absolute;
-    color: #ffffff !important;
-    font-size: 11px !important;
-    font-weight: 800 !important;
-}
-
-.slider_off {
-    background: url(/images/switch-bg.png) -57px 0px no-repeat;
-    left: 60px;
-    text-indent: 26px;
-    color: #000 !important;
-}
-
-.slider_on {
-    background: url(/images/switch-bg.png) 0px 0px no-repeat;
-    text-indent: 10px;
-    left: 2px;
-}
-
-.slider_holder {
-    float: left;
-    /* margin-top: 3px; */
-    overflow-x: hidden;
-    padding-left: 0px;
-    position: relative;
-    width: 60px;
-    height: 25px;
-    cursor: pointer;
-}
-
-.viewSlider{
-	    float: right;
-    margin-top: -3px;
+	float: right;
 }
 
 #popupcontainer {
@@ -384,9 +337,9 @@ body {
 }
 
 #popup {
-	width: 260px;
-	height: 390px;
-	margin: 20px;
+	width: 270px;
+	height: 410px;
+	margin: 10px;
 }
 
 #popupcontainer-close {
@@ -394,54 +347,34 @@ body {
     margin-right: 6px;
     margin-top: 5px;
     font-size: 22px;
+    cursor: pointer;
 }
 
 #selectScore {
-	    position: absolute;
-	    margin-top: 12px;
-	    font-size: 22px;
-	    display: none;
+    position: absolute;
+    margin-top: 12px;
+    font-size: 22px;
+    display: none;
 }
 
-#popcontainer-close{
+#burnDownChart {
+	height: 100%;
+}
+
+#shareChart {
+	display:none;
+	position: absolute;
+	bottom: 20px;
+	right: 30px;
+	height: 30px;
+	width: 30px;
+	background-color: #555555;
+	color: white;
+	border-radius: 50%;
+	line-height: 2;
 	cursor: pointer;
-	margin-right: 5px;
-    margin-top: 0px;
 }
 
-.dropdown-menu{
-	min-width: 10px;
-    max-height: 140px;
-    overflow: scroll;
-}
-
-#sprint{
-	margin-top: 20px;
-}
-
-.headerLabel{
-	font-size: large;
-}
-
-.btn-group{
-	    float: right;
-	    clear: both;
-    margin-top: -33px;
-}
-
-.sprintDuration{
-	float: left;
-    margin-top: 7px;
-    font-size: large;
-}
-.dropdown-toggle{
-	border-bottom: solid 1px #555555;
-    border-radius: 0px;
-    padding: 0px;
-    font-size: 20px;
-    width: 58px;
-}
-
-#scrumPreference{
-	margin-top:35px;
-}
+#shareChart i {
+	padding-left: 10px;	
+}	
