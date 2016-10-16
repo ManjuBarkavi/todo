@@ -256,9 +256,6 @@ $(function(){
 								    data: {
 								    	
 								      type: 'line',
-								      title: {
-								    	    "text": "Burn Down Chart"
-								    	  },
 								      
 								      legend: {
 								    	    "header": {
