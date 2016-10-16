@@ -40,7 +40,7 @@ body {
 }
 
 .scrumMode {
-	width: 217px !important;
+	width: 210px !important;
 	margin-left: 50px !important;
 	font-size: 17px !important;
 }
@@ -112,6 +112,7 @@ body {
 	line-height: 1;
 	font-size: 14px;
 	opacity: 0.7;
+	color: #555555;
 }
 
 #todo-list li:hover .destroy {
@@ -232,7 +233,7 @@ body {
 }
 
 #todo-list-container {
-	width: 300px;
+	width: 280px;
 	margin-left: -10px;
 }
 
@@ -400,7 +401,7 @@ body {
 
 #selectScore {
     position: absolute;
-    margin-top: 12px;
+    /* margin-top: 0px; */
     font-size: 22px;
     display: none;
 }
