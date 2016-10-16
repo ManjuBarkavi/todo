@@ -164,15 +164,17 @@ $(function(){
 
     // Remove the item, destroy the model.
     clear: function(e) {
+    	var data = this.model;
+    	
     	if($(e.currentTarget).hasClass('share'))
     	{
     		if(Share.shareAsFeed(this.model))
     		{
-    			this.model.destroy();
+    			this.model.destroy({data: JSON.stringify(data), contentType: 'application/json'});
     		}
     		return;
     	}
-      this.model.destroy();
+      this.model.destroy({data: JSON.stringify(data), contentType: 'application/json'});
     }
 
   });
@@ -330,10 +332,9 @@ $(function(){
 		  				},
 		  render	:	function()
 		  				{
-			  					var template = _.template(this.template, {});
-				  				this.$el.html(template);
-				  				this.$el.show();
-			  				
+			  				var template = _.template(this.template, {});
+			  				this.$el.html(template);
+			  				this.$el.show();
 		  				},
 	closeMenuBar	:	function(e)
 		  				{
@@ -544,7 +545,6 @@ $(function(){
     },
     
     showMenu	:	function() {
-    	
     	MenuView.render();
     },
     
@@ -575,7 +575,7 @@ $(function(){
 						    	$("#deactivateScrumMode").hide();
 						    	$("#activateScrumMode").show();
 						    	$("#activateScrumMode").addClass("activate");
-						    	
+
 						    	if(userPrefer.appMode)
 						    	{
 						    		//this.deactivateScrumMode();
