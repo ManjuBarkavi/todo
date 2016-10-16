@@ -25,7 +25,7 @@ public class TodoService extends JDOService{
 		List<TodoListJDO> todoList= new ArrayList<TodoListJDO>();
 		try {
 			
-			todoList = getEntitiesByQuery(TodoListJDO.class, "status != inactive && contactKey == '"+contactKey+"'", "dateAdded DESC");
+			todoList = getEntitiesByQuery(TodoListJDO.class, "status == active && contactKey == '"+contactKey+"'", "dateAdded DESC");
 			return gson.toJson(todoList);
 			
 		} catch(Exception e) {

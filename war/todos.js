@@ -33,7 +33,8 @@ $(function(){
         order: Todos.nextOrder(),
         type: 0, // 0 = normal, 1 = scrum 
         score:0,
-        isDone: false
+        isDone: false,
+        status: "active"
       };
     },
 
