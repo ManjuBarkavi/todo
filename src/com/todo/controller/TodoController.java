@@ -38,11 +38,11 @@ public class TodoController
 		
 	}
 	
-	@RequestMapping(value="/todo/{key}", method = RequestMethod.PUT)
-	  public @ResponseBody String updateTodo(HttpServletRequest request, HttpServletResponse response,@PathVariable("key") String key, @RequestBody String todo ) {
+	@RequestMapping(value="/todo", method = RequestMethod.PUT)
+	  public @ResponseBody String updateTodo(HttpServletRequest request, HttpServletResponse response, @RequestBody String todo ) {
 		
 		Map<String, Object> jsonJavaRootObject = new Gson().fromJson(todo, Map.class);
-		jsonJavaRootObject.put("key", key);
+		
 		return _todoService.updateTodo(jsonJavaRootObject);
 		
 	}

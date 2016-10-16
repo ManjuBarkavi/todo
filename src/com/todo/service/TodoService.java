@@ -80,7 +80,6 @@ public class TodoService extends JDOService{
 		
 	}
 	
-	
 	public String updateTodo(Map<String, Object> todo)
 	{
 		
@@ -114,10 +113,11 @@ public class TodoService extends JDOService{
 			newTodo.setScore(scoreValue);
 			newTodo.setIsDone((Boolean) todo.get("isDone"));
 			
-			Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			
-			newTodo.setDateCompleted(now.getTimeInMillis());
-			
+			if((Boolean) todo.get("isDone") == true)
+			{	
+				Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+				newTodo.setDateCompleted(now.getTimeInMillis());
+			}
 			pm.makePersistent(newTodo);
 			
 			
