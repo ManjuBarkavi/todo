@@ -219,13 +219,7 @@ $(function(){
 	  
 		generateChart : function()	{	
 			
-							/*var duration = 14;
-							var xaxis = [];
-							for(var k = duration; k<=duration && k!=-1; k--)
-							{
-								xaxis.push(k);
-							}*/	
-			
+							
 							console.log(Todos);
 							
 							var total = Todos.pluck("score");
@@ -244,63 +238,10 @@ $(function(){
 							}	
 							
 							
-							/*var ideal = [0];
-							for(var i=0; i <total.length; i++)
-							{
-								var model = total[i].toJSON();
-								//temp.push(model.score);
-								ideal[0] = ideal[0]+model.score;
-							}
-							
-							if(ideal.indexOf(0) == -1)
-							{
-								ideal.push(0);
-							}*/
-							
-							
-							/*var max = function( array ){
-							    return Math.max.apply( Math, array );
-							};
-							
-							var ideal = [];
-							
-							ideal[0] = max(temp);
-							ideal[1] = 0;*/
-							
-								
-							
-							/*var burned = [];
-							for(var j=0; j<done.length; j++)
-							{
-								var model = done[j].toJSON();
-								burned.push(model.score);
-							}
-							
-							var getSum = function (total, num) {
-							    return total + num;
-							}
-							
-							if(burned.reduce(getSum) == ideal[0])
-							{
-								burned.push(0);
-							}*/
-							//var totalEffort = 70;
 							var sprintDuration = 7;
 							var idealLine = [ [0,totalEffort],[sprintDuration,0] ];
 							
-							//var burnLine = [ [0,totalEffort],[1,(totalEffort-10)],[2,(totalEffort-15)],[3,(totalEffort-35)],[4,(totalEffort-40)],[5,(totalEffort-50)],[6,(totalEffort-60)],[7,(totalEffort-70)] ];
 							
-							
-							/*var burnLine = [0,1,2,3,4,5,6,7];
-							
-							
-							
-							//int[][] burnLine = new int[sprintDuration][10];
-							
-							for(var i=0; i<sprintDuration; i++)
-							{
-								burnLine[i][i] = [(totalEffort-10)];
-							}*/	
 							
 							var burnLine = [[0,totalEffort]];
 							for(var k=1; k<=sprintDuration; k++)
@@ -309,14 +250,6 @@ $(function(){
 									burnLine[k] = [k,(totalEffort-scores[k-1])];
 							}	
 							
-							/*var burnLine = [];
-							for ( var i = 0; i < sprintDuration ; i++) {
-								if(!burnLine[i])
-									burnLine[i] = [];
-							    for ( var j = 0; j < 1 ; j++)
-							    	burnLine[i][j] = totalEffort-10; 
-							         
-							}*/
 							
 							zingchart.render({
 								    id: 'burnDownChart',
