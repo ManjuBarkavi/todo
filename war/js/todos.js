@@ -418,8 +418,8 @@ $(function(){
       this.main = $('#main');
       
       $("#new-todo").focus();
-      var ajaxcall = Todos.fetch();
-      ajaxcall.abort();
+      //var ajaxcall = Todos.fetch();
+      //ajaxcall.abort();
       
       var _this = this;
       setTimeout(function(){ 

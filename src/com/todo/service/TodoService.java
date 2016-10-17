@@ -3,20 +3,17 @@ package com.todo.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
-import java.util.UUID;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
-import com.todo.dao.JDOService;
+import com.google.gson.Gson;
 import com.todo.dao.PMF;
 import com.todo.jdo.TodoListJDO;
 
-import com.google.gson.Gson;
 
-
-public class TodoService extends JDOService{
+public class TodoService {//extends JDOService{
 
 	private static final Gson gson = new Gson();
 	
@@ -24,15 +21,34 @@ public class TodoService extends JDOService{
 	{
 		
 		List<TodoListJDO> todoList= new ArrayList<TodoListJDO>();
+		PersistenceManager pm = null;
 		try {
 			
-			todoList = getEntitiesByQuery(TodoListJDO.class, "status == active && contactKey == '"+contactKey+"'", "dateAdded DESC");
+			pm = PMF.get().getPersistenceManager();
+			
+			//Query q = pm.newQuery(TodoListJDO.class, "status == active && contactKey =='"+contactKey+"'" );
+			
+			Query q = pm.newQuery(TodoListJDO.class);
+			q.setFilter("status == active");
+			q.setFilter("contactKey == '"+contactKey+"'");
+			//q.setOrdering("dateAdded DESC");
+			
+			System.out.println( q.toString());
+			
+			
+			todoList = (List<TodoListJDO>) q.execute();
+			
+			//todoList = getEntitiesByQuery(TodoListJDO.class, "status == active && contactKey == '"+contactKey+"'", "dateAdded DESC");
+			System.out.println(todoList.size());
 			return gson.toJson(todoList);
 			
 		} catch(Exception e) {
 		
 			e.printStackTrace();
 			return null;
+		} finally {
+			if(pm != null)
+				pm.close();
 		}
 	}
 	
@@ -79,6 +95,7 @@ public class TodoService extends JDOService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			if(pm != null)
 			pm.close();
 		}
 
@@ -131,6 +148,7 @@ public class TodoService extends JDOService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+			if(pm != null)
 			pm.close();
 		}
 
@@ -155,6 +173,7 @@ public class TodoService extends JDOService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+			if(pm != null)
 			pm.close();
 		}
 		return gson.toJson(todo);
