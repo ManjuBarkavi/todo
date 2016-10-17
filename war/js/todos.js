@@ -48,6 +48,7 @@ $(function(){
     // Toggle the `done` state of this todo item.
     toggle: function() {
       this.save({isDone: !this.get("isDone")});
+      App.render();
     }
 
   });
