@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-
 import java.net.URL;
 
+import javax.jdo.JDOHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.todo.dao.JDOService;
-import com.todo.jdo.ContactJDO;
+import com.todo.jdo.Contact;
 
 
 @Controller
-public class OauthController {
+public class OauthController extends JDOService{
 	
 	private static final String client_id = "29354-03ca85f7a4dd032e86c3c0842f67a418";
 	private static final String client_secret = "3HXKooDdyf_8ucI22tM7uFlz3wN0xxd5wzlH6l07";
@@ -30,20 +30,20 @@ public class OauthController {
 	
 	
 	@RequestMapping(value="/oauth/callback" , method = RequestMethod.GET)
-	public @ResponseBody String getAccessToken(@RequestParam("code") String authcode,@RequestParam("state") String awContactKey,HttpServletRequest req, HttpServletResponse res)
+	public @ResponseBody String getAccessToken(@RequestParam("code") String authcode,@RequestParam("state") String contactKey,HttpServletRequest req, HttpServletResponse res)
 	{
 		System.out.println("authcode "+authcode);
 
-		this.getAndSaveToken(authcode, awContactKey);
+		this.getAndSaveToken(authcode, contactKey);
 		
 		return "success";
 
 	}
 	
 	/*@RequestMapping(value="/getCode" , method = RequestMethod.GET)
-	public @ResponseBody String fetchAuthCode(@RequestParam("awContactKey") String awContactKey)
+	public @ResponseBody String fetchAuthCode(@RequestParam("contactKey") String awContactKey)
 	{
-		String url = "https://access.anywhereworks.com/o/oauth2/auth?response_type=code&client_id=29354-03ca85f7a4dd032e86c3c0842f67a418&scope=awapis.notifications.write%20awapis.chat.streams.push%20awapis.streams.read%20awapis.users.read%20awapis.feeds.write%20awapis.identity%20awapis.account.read%20&redirect_uri=http://todo-scrum-live.appspot.com/oauth/callback&approval_prompt=force&access_type=offline&state="+awContactKey;
+		String url = "https://access.anywhereworks.com/o/oauth2/auth?response_type=code&client_id=29354-03ca85f7a4dd032e86c3c0842f67a418&scope=awapis.notifications.write%20awapis.chat.streams.push%20awapis.streams.read%20awapis.users.read%20awapis.feeds.write%20awapis.identity%20awapis.account.read%20&redirect_uri=http://todo-scrum-live.appspot.com/oauth/callback&approval_prompt=force&access_type=offline&state="+contactKey;
 		
 		URL obj;
 		try {
@@ -72,7 +72,7 @@ public class OauthController {
 		
 	}*/
 	
-	public String getAndSaveToken(String code, String awContactKey) {
+	public String getAndSaveToken(String code, String contactKey) {
 
 		String scope =	null;
 		//boolean status =	false;
@@ -84,7 +84,7 @@ public class OauthController {
 		{
 
 
-		if(code != null && awContactKey != null)
+		if(code != null && contactKey != null)
 		{
 			String url = "https://access.anywhereworks.com/o/oauth2/v1/token";
 			URL obj = new URL(url);
@@ -123,7 +123,7 @@ public class OauthController {
 			
 					accessToken= responseObject.getString("access_token");
 		
-					this.saveAccessToken(awContactKey, accessToken, responseObject.getString("refresh_token"));
+					this.saveAccessToken(contactKey, accessToken, responseObject.getString("refresh_token"));
 					
 		
 				}
@@ -141,20 +141,29 @@ public class OauthController {
 	}
 	
 	
-	public boolean saveAccessToken(String awContactKey, String accessToken, String refreshToken)
+	public boolean saveAccessToken(String contactKey, String accessToken, String refreshToken)
 	{
 		//boolean status = false;
 		
-		JDOService jdoService = new JDOService();
-		ContactJDO contact = new ContactJDO();
+		//JDOService jdoService = new JDOService();
+		Contact contact = new Contact();
 		try {
 			
-		contact.setAwContactKey(awContactKey);
+			Contact existingContact = getContactByKey(contactKey);
+			
+			if( existingContact!= null)
+			{
+				contact = existingContact;
+			}	
+		
+			
+		contact.setContactKey(contactKey);
 		contact.setAccessToken(accessToken);
 		contact.setRefreshToken(refreshToken);
+		JDOHelper.getPersistenceManager(contact);
 		
-		
-			jdoService.persist(contact);
+		persist(contact);
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();

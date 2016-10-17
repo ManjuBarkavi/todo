@@ -8,9 +8,9 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
-public class ContactJDO {
+public class Contact{
 
-private static final long serialVersionUID = 5111923021645L;
+private static final long serialVersionUID = 5111923021544L;
 	
 	
 	@PrimaryKey
@@ -18,7 +18,7 @@ private static final long serialVersionUID = 5111923021645L;
 	private Long id;
 	
 	@Persistent
-	private String awContactKey;
+	private String contactKey;
 	
 	@Persistent
 	private String accessToken;
@@ -26,12 +26,12 @@ private static final long serialVersionUID = 5111923021645L;
 	@Persistent
 	private String refreshToken;
 
-	public String getAwContactKey() {
-		return awContactKey;
+	public String getContactKey() {
+		return contactKey;
 	}
 
-	public void setAwContactKey(String awContactKey) {
-		this.awContactKey = awContactKey;
+	public void setContactKey(String contactKey) {
+		this.contactKey = contactKey;
 	}
 
 	public String getAccessToken() {
@@ -56,6 +56,10 @@ private static final long serialVersionUID = 5111923021645L;
 
 	public Long getId() {
 		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

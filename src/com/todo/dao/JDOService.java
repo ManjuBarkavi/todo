@@ -5,13 +5,14 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import com.todo.jdo.ContactJDO;
+import com.todo.jdo.Contact;
+
 
 public class JDOService {
 	
-	public ContactJDO getContactByKey(String contactKey){
+	public Contact getContactByKey(String contactKey){
 		
-		ContactJDO contact = null;
+		Contact contact = null;
 		
 		//get token from db
 	
@@ -19,8 +20,8 @@ public class JDOService {
 	try {
 		
 		 pm = this.getDefaultPersistenceManager();
-		Query query = this.getDefaultPersistenceManager().newQuery(ContactJDO.class,"awContactKey=='"+contactKey+"'");
-		List<ContactJDO> contactlist = (List<ContactJDO>) query.execute();
+		Query query = pm.newQuery(Contact.class,"contactKey=='"+contactKey+"'");
+		List<Contact> contactlist = (List<Contact>) query.execute();
 		
 		if(!contactlist.isEmpty())
 		{

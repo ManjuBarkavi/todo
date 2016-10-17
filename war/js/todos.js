@@ -115,6 +115,7 @@ $(function(){
       "click .toggle"   : "toggleDone",
       "dblclick .view"  : "edit",
       "click a.destroy" : "clear",
+      "click .share"	: "shareTaskinFeed",
       "keypress .edit"  : "updateOnEnter",
       "blur .edit"      : "close"
     },
@@ -164,32 +165,35 @@ $(function(){
 
     // Remove the item, destroy the model.
     clear: function(e) {
-    	var data = this.model;
     	
-    	if($(e.currentTarget).hasClass('share'))
-    	{
-    		if(Share.shareAsFeed(this.model))
-    		{
-    			this.model.destroy({data: JSON.stringify(data), contentType: 'application/json'});
-    		}
-    		return;
-    	}
-      this.model.destroy({data: JSON.stringify(data), contentType: 'application/json'});
-    }
+    	e.stopPropagation();
+    	var data = this.model;
+    	this.model.destroy({data: JSON.stringify(data), contentType: 'application/json'});
+      //return;
+    },
+    
+    shareTaskinFeed : function(e)
+  						{
+    						e.stopPropagation();
+    						Share.shareAsFeed(this.model.get("title"));
+  						}
 
   });
 
   
  var ShareView = Backbone.View.extend({
 	  
-	  shareAsFeed	:	function(model)
+	  shareAsFeed	:	function(feed)
 	  					{
 		  					if(awApp.loggedinUser)
 		  					{
+		  					
 		  					$.ajax({
 		  						
-		  						url:"/sendFeed?contactKey"+awApp.loggedinUser.id+"&feed=Completed - "+model.get('title'),
+		  						url:"/sendFeed?contactKey="+awApp.loggedinUser.id,
 		  						type:"POST",
+		  						data: feed,
+		  						contentType:"application/json",
 		  						success : function(data)
 		  						{
 		  							Share.showMessage("Feed Posted!");
@@ -199,9 +203,8 @@ $(function(){
 		  							console.log(data);
 		  						}
 		  					});
-		  					}
-		  					//this.showMessage("Shared!");
-		  					return true;
+		  					}	
+		  					
 	  					},
 	  	showMessage	:	function(message)
 	  					{
@@ -247,12 +250,17 @@ $(function(){
 							
 							
 							var burnLine = [[0,totalEffort]];
+							var subTotal = 0;
 							for(var k=1; k<=sprintDuration; k++)
 							{
-								if(scores[k-1])
-									burnLine[k] = [k,(totalEffort-scores[k-1])];
+								var h = scores[k-1];
+								if(h)
+									burnLine[k] = [k,(totalEffort-scores[k-1]-subTotal)];
+								
+								subTotal += scores[k-1];
+								
 							}	
-							
+							//return;
 							
 							zingchart.render({
 								    id: 'burnDownChart',
@@ -267,39 +275,28 @@ $(function(){
 								    	    "draggable": true,
 								    	    "drag-handler": "icon"
 								    	  },
-								    	  
-								    	  "scale-x": {
-								    		    "label": {
-								    		      "text": "Duration"
-								    		    }
-								    		  },
-								    		  
-								    	  /*"scale-y": {
-								    		    "label": {
-								    		      "text": "Velocity"
-								    		    }
-								    		  },*/
-								    		  /*"scale-y": {
-								    			    "progression": "log",
-								    			    "log-base": 10,
-								    			    "label": {
-								    		      "text": "Velocity"
-								    		    }
-								    			  },*/
 								    		  
 								    		  "scale-y":{
 								    			    "values":"0:"+totalEffort+":1",
+								    			    "label": {
+										    		      "text": "Total Velocity"
+										    		    }
 								    		  },
 								    		  
 								    		  "scale-x":{
 								    			    "values":"0:"+sprintDuration+":1",
+								    			    "label": {
+										    		      "text": "Days"
+										    		    }
 								    		  },
 								    		  
 								           series: [{
-								        values: burnLine,//[54,23,34,23,43,54,23,34,23,43],
-								      }, {
-								        values: idealLine,//[40,14]
-								      }]
+												        values: burnLine,
+												        "text":"Burned Line"
+											      	}, {
+												        values: idealLine,
+												        "text":"Ideal Line"
+											      }]
 									      
 								    }
 								  });
@@ -314,6 +311,10 @@ $(function(){
 							$("#popupcontainer").show();
 							$("#burnDownChart").append($("#shareChart"));
 							$("#shareChart").show();
+							$("#burnDownChart").append($("#printChart"));
+							$("#printChart").show();
+							$("#burnDownChart").append($("#saveChart"));
+							//$("#saveChart").show();
 						},
 					
   });		
@@ -395,7 +396,9 @@ $(function(){
     	"click #preferences"	:	"showPreferences",
     	"click .activate"	:	"switchScrumMode",
     	"click .deactivate"	:	"switchNormalMode",
-    	"click #staffHours_s_c358_mo li a"	:	"getScrumDuration"
+    	"click #staffHours_s_c358_mo li a"	:	"getScrumDuration",
+    	"click #printChart"	:	"printChart",
+    	"click #saveChart"	:	"saveChart"
     	},
 
    
@@ -412,7 +415,8 @@ $(function(){
       this.main = $('#main');
       
       $("#new-todo").focus();
-      Todos.fetch();
+      var ajaxcall = Todos.fetch();
+      ajaxcall.abort();
       
       var _this = this;
       setTimeout(function(){ 
@@ -423,11 +427,12 @@ $(function(){
 		      url: url,
 		      type:"GET",
 		      success:function(data){
+		    	  data = JSON.stringify([{title:"one",score:10,isDone:true},{title:"two",score:10,isDone:true},{title:"three",score:10,isDone:true},{title:"four",score:10,isDone:true},{title:"five",score:10,isDone:true},{title:"six",score:10,isDone:true},{title:"seven",score:10,isDone:true}]);
 		    	  if(data.length > 0){
-		      data = JSON.parse(data);
-		      Todos = new TodoList(data);
-		      _this.addAll();
-		      _this.render();
+				      data = JSON.parse(data);
+				      Todos = new TodoList(data);
+				      _this.addAll();
+				      _this.render();
 		    	  }
 		      }
 	      });
@@ -520,14 +525,15 @@ $(function(){
     createOnEnter: function(e) {
       if (e.keyCode != 13) return;
       if (!this.input.val()) return;
-
+      
+      var tempTodo = {title: this.input.val()};
+      
       if(userPrefer.appMode)
 	  	{
-	  		todo.set("score",parseInt($("#selectScore").val()));
+    	  tempTodo.score = parseInt($("#selectScore").val());
 	  	}
       
-      
-      var todo = Todos.create({title: this.input.val()});
+      var todo = Todos.create(tempTodo);
       this.input.val('');
       var view = new TodoView({model: todo});
       this.$("#todo-list").append(view.render().el);
@@ -596,8 +602,8 @@ $(function(){
 						    
     getScrumDuration	:	function(e)
 						    {
-						    var numOfDays = $(e.currentTarget).html();
-						    var sprintDuration = $(".dropdown-toggle").html(numOfDays+"<span class='caret'style='margin-left:10px'></span>");
+						    	var numOfDays = $(e.currentTarget).html();
+						    	var sprintDuration = $(".dropdown-toggle").html(numOfDays+"<span class='caret'style='margin-left:10px'></span>");
 						    },    
     
     showScore	:	function()
@@ -617,19 +623,25 @@ $(function(){
 				    	$("#popupcontainer").hide();
 				    },
 				    
-getBase64Image	:	function() {
-						var img = $("#burnDownChart-img"); 
-					    var canvas = document.createElement("canvas");
-					    canvas.width = img.width;
-					    canvas.height = img.height;
-
-					    var ctx = canvas.getContext("2d");
-					    ctx.drawImage(img, 0, 0);
-
-					    var dataURL = canvas.toDataURL("image/png");
-
-					    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-					}
+getBase64Image	:	function()
+				    {
+				    	zingchart.EXPORTURL = 'http://localhost:8888/uploadimage'; // this will work only when the example will run under my.server.com
+				    	zingchart.AJAXEXPORT = true;
+				    	zingchart.exec('burnDownChart', 'getimagedata', {
+				    	    format : 'png',
+				    	    callback : function(sImageData) {
+				    	        $('#burnDownChart').append('<img src="' + sImageData + '">');
+				    	    }
+				    	});
+				    },
+				    
+	printChart	:	function() {
+						zingchart.exec('burnDownChart', 'print');
+					},
+	saveChart	:	function() {
+						zingchart.exec('burnDownChart', 'saveasimage');
+					}	
+				
 	
   });
 

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
 
 import javax.jdo.PersistenceManager;
 
@@ -36,14 +37,14 @@ public class TodoService extends JDOService{
 	}
 	
 	
-	public String saveTodo(Map<String, Object> todo, String contactKey)
+	public String saveTodo(TodoListJDO todo, String contactKey)
 	{
-		TodoListJDO newTodo = new TodoListJDO();
+		//TodoListJDO newTodo = new TodoListJDO();
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		try {
 			
-			Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			/*Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			
 			Double orderValue = new Double(todo.get("order").toString());
 			int integerValue = orderValue.intValue();
@@ -65,8 +66,14 @@ public class TodoService extends JDOService{
 			newTodo.setType(type);
 			newTodo.setDateAdded(now.getTimeInMillis());
 			newTodo.setScore(scoreValue);
-			newTodo.setIsDone((Boolean) todo.get("isDone"));
-			pm.makePersistent(newTodo);
+			newTodo.setIsDone((Boolean) todo.get("isDone"));*/
+			
+			todo.setContactKey(contactKey);
+			Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			todo.setDateAdded(now.getTimeInMillis());
+			
+			
+			pm.makePersistent(todo);
 
 			
 		} catch (Exception e) {
@@ -75,24 +82,23 @@ public class TodoService extends JDOService{
 			pm.close();
 		}
 
-		
-		return gson.toJson(newTodo);
+		return gson.toJson(todo);
 		
 	}
 	
-	public String updateTodo(Map<String, Object> todo)
+	public String updateTodo(TodoListJDO todo)
 	{
 		
-		TodoListJDO newTodo = null;
+		
 		PersistenceManager pm = null;
 		pm = PMF.get().getPersistenceManager();
 		
 		try {
-			newTodo = pm.getObjectById(TodoListJDO.class, todo.get("key"));
+			
+			//newTodo = pm.getObjectById(TodoListJDO.class, todo.getId());
 			
 			
-			
-			Double orderValue = new Double(todo.get("order").toString());
+			/*Double orderValue = new Double(todo.get("order").toString());
 			int integerValue = orderValue.intValue();
 			
 			Double typeValue = new Double(todo.get("type").toString());
@@ -106,19 +112,20 @@ public class TodoService extends JDOService{
 			Integer scoreValue = new Integer(scoreIntValue);
 			String title = (String)todo.get("title");
 			
-			
+			System.out.println(title);
 			newTodo.setTitle( title);
 			newTodo.setOrder(order);
 			newTodo.setType(type);
 			newTodo.setScore(scoreValue);
-			newTodo.setIsDone((Boolean) todo.get("isDone"));
+			newTodo.setIsDone((Boolean) todo.get("isDone"));*/
 			
-			if((Boolean) todo.get("isDone") == true)
+			if( todo.getIsDone())
 			{	
 				Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-				newTodo.setDateCompleted(now.getTimeInMillis());
+				todo.setDateCompleted(now.getTimeInMillis());
 			}
-			pm.makePersistent(newTodo);
+			
+			pm.makePersistent(todo);
 			
 			
 		} catch (Exception e) {
@@ -128,29 +135,29 @@ public class TodoService extends JDOService{
 		}
 
 	
-	return gson.toJson(newTodo);
+	return gson.toJson(todo);
 		
 	}
 	
 	
-	public String deleteTodo(Map<String, Object> todo)
+	public String deleteTodo(TodoListJDO todo)
 	{
-		TodoListJDO newTodo = null;
+		//TodoListJDO newTodo = null;
 		PersistenceManager pm = null;
 		pm = PMF.get().getPersistenceManager();
 		
 		try {
 			
-			newTodo = pm.getObjectById(TodoListJDO.class, todo.get("key"));
-			newTodo.setStatus("inactive");
-			pm.makePersistent(newTodo);
+			//newTodo = pm.getObjectById(TodoListJDO.class, todo.getId());
+			todo.setStatus("inactive");
+			pm.makePersistent(todo);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			pm.close();
 		}
-		return gson.toJson(newTodo);
+		return gson.toJson(todo);
 		
 	}
 	
