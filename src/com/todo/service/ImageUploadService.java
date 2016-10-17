@@ -20,7 +20,7 @@ public class ImageUploadService {
 	public String uploadImage(String data)
 	{
 		String imageURL = "";
-		String BUCKETNAME    =  "burndownchart";
+		String BUCKETNAME    =  "todo-v2-live.appspot.com";
 		String filename      =  "images";
 		String imagecontentype = "image/png";
 		String imageUrlPath= "";

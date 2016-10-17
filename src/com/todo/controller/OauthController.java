@@ -26,7 +26,7 @@ public class OauthController extends JDOService{
 	
 	private static final String client_id = "29354-03ca85f7a4dd032e86c3c0842f67a418";
 	private static final String client_secret = "3HXKooDdyf_8ucI22tM7uFlz3wN0xxd5wzlH6l07";
-	private static final String redirect_uri = "http://todo-scrum-live.appspot.com/oauth/callback";
+	private static final String redirect_uri = "http://todo-v2-live.appspot.com/oauth/callback";
 	
 	
 	@RequestMapping(value="/oauth/callback" , method = RequestMethod.GET)

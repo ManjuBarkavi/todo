@@ -267,7 +267,10 @@ $(function(){
 								    data: {
 								    	
 								      type: 'line',
-								      
+								      "title": {
+								    	  "text":"Burn Down Chart"
+								    	},
+							
 								      legend: {
 								    	    "header": {
 								    	      "text": "Legend"
@@ -286,16 +289,16 @@ $(function(){
 								    		  "scale-x":{
 								    			    "values":"0:"+sprintDuration+":1",
 								    			    "label": {
-										    		      "text": "Days"
+										    		      "text": "Sprint Duration (Days)"
 										    		    }
 								    		  },
 								    		  
 								           series: [{
 												        values: burnLine,
-												        "text":"Burned Line"
+												        "text":"Burned"
 											      	}, {
 												        values: idealLine,
-												        "text":"Ideal Line"
+												        "text":"Ideal"
 											      }]
 									      
 								    }
@@ -427,7 +430,7 @@ $(function(){
 		      url: url,
 		      type:"GET",
 		      success:function(data){
-		    	  data = JSON.stringify([{title:"one",score:10,isDone:true},{title:"two",score:10,isDone:true},{title:"three",score:10,isDone:true},{title:"four",score:10,isDone:true},{title:"five",score:10,isDone:true},{title:"six",score:10,isDone:true},{title:"seven",score:10,isDone:true}]);
+		    	  //data = JSON.stringify([{title:"one",score:10,isDone:true},{title:"two",score:10,isDone:true},{title:"three",score:10,isDone:true},{title:"four",score:10,isDone:true},{title:"five",score:10,isDone:true},{title:"six",score:10,isDone:true},{title:"seven",score:10,isDone:true}]);
 		    	  if(data.length > 0){
 				      data = JSON.parse(data);
 				      Todos = new TodoList(data);
@@ -537,6 +540,10 @@ $(function(){
       this.input.val('');
       var view = new TodoView({model: todo});
       this.$("#todo-list").append(view.render().el);
+      
+      $("#randomMsg").hide();
+      $("#main").show();
+      
     },
 
     // Clear all done todo items, destroying their models.
@@ -625,7 +632,7 @@ $(function(){
 				    
 getBase64Image	:	function()
 				    {
-				    	zingchart.EXPORTURL = 'http://localhost:8888/uploadimage'; // this will work only when the example will run under my.server.com
+				    	zingchart.EXPORTURL = 'http://localhost:8888/uploadLanguage'; // this will work only when the example will run under my.server.com
 				    	zingchart.AJAXEXPORT = true;
 				    	zingchart.exec('burnDownChart', 'getimagedata', {
 				    	    format : 'png',
